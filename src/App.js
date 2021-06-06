@@ -47,8 +47,10 @@ function App() {
       return
     }
 
-    dispatch(sendCartdata(cart))
-  }, [cart])
+    if (cart.changed) {
+      dispatch(sendCartdata(cart))
+    }
+  }, [cart, dispatch])
 
   useEffect(() => {
     dispatch(fetchCartdata())
