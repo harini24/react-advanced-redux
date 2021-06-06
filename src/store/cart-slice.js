@@ -35,7 +35,7 @@ const CartSlice = createSlice({
             state.totalQuantity--
             if (existingItem.quantity == 1) {
                 console.log("remove existing 1")
-                state.items = state.items.filter(item => item.id === existingId)
+                state.items = state.items.filter(item => item.id !== existingId)
             } else {
                 console.log("remove existing")
                 existingItem.quantity--
