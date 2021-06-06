@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UiActions } from './ui-slice'
 const CartSlice = createSlice({
     name: 'cart',
     initialState: {
@@ -7,6 +6,10 @@ const CartSlice = createSlice({
         totalQuantity: 0
     },
     reducers: {
+        replacecart(state, action) {
+            state.totalQuantity = action.payload.totalQuantity
+            state.items = action.payload.items
+        },
         addItemTocart(state, action) {
             const newItem = action.payload
             const existingItem = state.items.find(item => item.id === newItem.id)
@@ -46,28 +49,5 @@ const CartSlice = createSlice({
     }
 })
 
-export const sendCartdata = (cart) => {
-    return async (dispatch) => {
-        dispatch(UiActions.showNotification({ status: 'pending', title: 'sending', message: 'sending cart data' }))
-
-        const sendReq = async () => {
-            const response = await fetch('https://react-burger-builder-29b01-default-rtdb.firebaseio.com/cart.json', {
-                method: 'PUT',
-                body: JSON.stringify(cart),
-            })
-
-            if (!response.ok) {
-                throw new Error('Sending cart data failed')
-            }
-        }
-
-        try {
-            await sendReq()
-            dispatch(UiActions.showNotification({ status: 'success', title: 'Success!...', message: 'sent cart data successfully' }))
-        } catch {
-            dispatch(UiActions.showNotification({ status: 'error', title: 'error!...', message: 'sent cart data failed' }))
-        }
-    }
-}
 export const cartActions = CartSlice.actions
 export default CartSlice

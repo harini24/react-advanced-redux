@@ -6,7 +6,7 @@ import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
 import Notification from './components/UI/Notification';
 import { UiActions } from './store/ui-slice'
-import { sendCartdata } from './store/cart-slice'
+import { sendCartdata, fetchCartdata } from './store/cart-actions'
 
 let isInitial = true
 function App() {
@@ -50,6 +50,9 @@ function App() {
     dispatch(sendCartdata(cart))
   }, [cart])
 
+  useEffect(() => {
+    dispatch(fetchCartdata())
+  }, [dispatch])
 
   return (
     <React.Fragment>
